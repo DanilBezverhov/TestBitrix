@@ -13,6 +13,10 @@ ErrorDocument 404 /404.php
 <IfModule mod_rewrite.c>
   Options +FollowSymLinks
   RewriteEngine On
+  RewriteBase /
+
+  
+  RewriteRule ^article/(.+)/?$ /local/components/parse/parse.news/article.php?url=/$1 [L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -l [OR]
