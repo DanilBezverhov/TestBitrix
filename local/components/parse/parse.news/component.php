@@ -31,7 +31,7 @@ try {
         $descrip = $newsItem->findElement(WebDriverBy::cssSelector('.card-full-news__announce'))->getText();
         $link = $newsItem->findElement(WebDriverBy::cssSelector('a'))->getAttribute('href');
         
-        // Добавление данных в массив
+       
         $newsData[] = [
             'title' => $title,
             'descrip' => $descrip,
@@ -40,10 +40,10 @@ try {
     }
 
     Loader::includeModule("iblock");
-    $iblockId = 1; // Укажите ваш IBLOCK_ID
+    $iblockId = 1; 
 
     foreach ($newsData as $news) {
-        // Проверка на существование новости по названию
+        
         $res = CIBlockElement::GetList(
             array(),
             array(
@@ -55,24 +55,24 @@ try {
             array("ID")
         );
 
-        // Пропускаем создание элемента, если новость уже есть
+       
         if ($res->SelectedRowsCount() > 0) {
             continue;
         }
 
-        // Добавление элемента в инфоблок
+       
         $el = new CIBlockElement;
         $fields = [
             "IBLOCK_ID"       => $iblockId,
             "NAME"            => $news['title'],
             "ACTIVE"          => "Y", 
-            "PREVIEW_TEXT"    => $news['descrip'],  // Краткое описание
-            "DETAIL_TEXT"     => $news['link'],  // Детальное описание (можно изменить, если нужно другое описание)
-            "PREVIEW_PICTURE" => CFile::MakeFileArray($imagePath),  // Картинка для анонса (если есть)
-            "DETAIL_PICTURE"  => CFile::MakeFileArray($detailImagePath),  // Детальная картинка (если есть)
+            "PREVIEW_TEXT"    => $news['descrip'],  
+            "DETAIL_TEXT"     => $news['link'],  
+            "PREVIEW_PICTURE" => CFile::MakeFileArray($imagePath),  
+            "DETAIL_PICTURE"  => CFile::MakeFileArray($detailImagePath),  
         ];
 
-        // Добавление элемента в инфоблок
+        
         $elID = $el->Add($fields);
     }
 
@@ -96,7 +96,7 @@ while ($news = $res->Fetch()) {
     $arResult[] = [
         "TITLE"   => $news["NAME"],
         "DESCRIP" => $news["DETAIL_TEXT"],
-        "LINK"    => $news["PREVIEW_TEXT"], // Ссылка сохраняется в PREVIEW_TEXT
+        "LINK"    => $news["PREVIEW_TEXT"], 
     ];
 }
 
